@@ -3,6 +3,7 @@
     package="com.example.interviewservice">
 
     <application
+        android:name=".ServiceApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,6 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="com.example.interviewservice.provider.RecommendAppProvider"
+            android:name=".provider.RecommendAppProvider"
+            android:exported="true"/>
     </application>
 
 </manifest>
