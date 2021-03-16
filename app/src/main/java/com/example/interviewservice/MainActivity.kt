@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope() {
             RecommendInfo(
                 "com.zhihu.android",
                 "知乎",
-                "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.cpnic.com%2FUploadFiles%2Fimg_2_1794357771_1636988519_26.jpg&refer=http%3A%2F%2Fwww.cpnic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1618482342&t=06aa56cbad9f7f9f1007cfc4a766cd15",
+                "https://ss3.baidu.com/-fo3dSag_xI4khGko9WTAnF6hhy/baike/pic/item/1b4c510fd9f9d72a26f9db77df2a2834349bbb3f.jpg",
                 "1.0.0"
             )
         )
