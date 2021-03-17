@@ -14,6 +14,7 @@ import com.example.interviewservice.database.ServiceDatabase
 import com.example.interviewservice.database.entity.RecommendInfo
 import com.example.interviewservice.utils.replaceBlank
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
@@ -59,8 +60,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope(), View.On
             data?.data?.let {
                 readFileToDatabase(it)
             }
-        }else{
-            Toast.makeText(this,getString(R.string.import_fail),Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, getString(R.string.import_fail), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -91,13 +92,15 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope(), View.On
                 it.read(bytes)
                 val recommendInfo: List<RecommendInfo>
                 try {
-                    val result = String(bytes).replaceBlank()
-                    Log.i(TAG, "readFile:$result")
-                    recommendInfo = Gson().fromJson(
-                        result,
-                        object : TypeToken<List<RecommendInfo>>() {}.type
-                    )
-                } catch (e: Exception) {
+                    withContext(Dispatchers.Default) {
+                        val result = String(bytes).replaceBlank()
+                        Log.i(TAG, "readFile:$result")
+                        recommendInfo = Gson().fromJson(
+                            result,
+                            object : TypeToken<List<RecommendInfo>>() {}.type
+                        )
+                    }
+                } catch (e: JsonSyntaxException) {
                     e.printStackTrace()
                     withContext(Dispatchers.Main) {
                         Toast.makeText(
