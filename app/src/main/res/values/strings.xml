@@ -3,4 +3,14 @@
     <string name="import_file">导入配置文件</string>
     <string name="file_error">文件必须是规定的json格式</string>
     <string name="import_success">导入文件成功</string>
+    <string name="import_fail">导入文件失败</string>
+    <string name="delete_item">删除项</string>
+    <string name="delete_item_success">删除成功</string>
+    <string name="delete_item_fail">删除失败</string>
+    <string name="clear_item">清除表</string>
+    <string name="clear_item_confirm">确定要删除所有数据？</string>
+    <string name="clear_item_finish">清理完成</string>
+    <string name="input_delete_package_name">请输入要删除的包名</string>
+    <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
 </resources>

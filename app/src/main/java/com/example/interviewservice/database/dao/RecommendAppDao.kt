@@ -14,8 +14,14 @@ import com.example.interviewservice.database.entity.RecommendInfo
 @Dao
 interface RecommendAppDao {
     @Query("SELECT * FROM RecommendInfo")
-    fun getAllRecommendApp(): List<RecommendInfo>
+    suspend fun getAllRecommendApp(): List<RecommendInfo>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertApp(info: List<RecommendInfo>)
+    suspend fun insertApp(info: List<RecommendInfo>)
+
+    @Query("DELETE FROM RecommendInfo WHERE RecommendInfo.packageName=:packageName")
+    suspend fun deleteApp(packageName: String):Int
+
+    @Query("DELETE FROM RecommendInfo")
+    suspend fun deleteAll()
 }
