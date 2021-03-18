@@ -91,6 +91,12 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope(), View.On
             launch(Dispatchers.IO) {
                 val bytes = ByteArray(it.available())
                 it.read(bytes)
+                if (bytes.isEmpty()) {
+                    withContext(Dispatchers.Main) {
+                        ToastUtil.showShort(this@MainActivity, getString(R.string.file_empty))
+                    }
+                    return@launch
+                }
                 val recommendInfo: List<RecommendInfo>
                 try {
                     withContext(Dispatchers.Default) {
