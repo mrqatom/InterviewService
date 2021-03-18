@@ -1,4 +1,4 @@
-package com.example.interviewservice.utils
+package com.example.interviewservice.utils.extensions
 
 import android.util.Log
 import com.example.interviewservice.MainActivity

@@ -12,7 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import com.example.interviewservice.database.ServiceDatabase
 import com.example.interviewservice.database.entity.RecommendInfo
-import com.example.interviewservice.utils.replaceBlank
+import com.example.interviewservice.utils.ToastUtil
+import com.example.interviewservice.utils.extensions.replaceBlank
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
@@ -103,21 +104,19 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope(), View.On
                 } catch (e: JsonSyntaxException) {
                     e.printStackTrace()
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(
-                            this@MainActivity,
-                            getString(R.string.file_error),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        ToastUtil.showShort(this@MainActivity, getString(R.string.file_error))
+                    }
+                    return@launch
+                } catch (e: OutOfMemoryError) {
+                    e.printStackTrace()
+                    withContext(Dispatchers.Main) {
+                        ToastUtil.showShort(this@MainActivity, getString(R.string.file_oom))
                     }
                     return@launch
                 }
                 ServiceDatabase.getRecommendAppDao().insertApp(recommendInfo)
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@MainActivity,
-                        getString(R.string.import_success),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    ToastUtil.showShort(this@MainActivity, getString(R.string.import_success))
                 }
             }
         }
