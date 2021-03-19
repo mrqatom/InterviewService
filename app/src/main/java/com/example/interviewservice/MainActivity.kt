@@ -88,13 +88,12 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope(), View.On
     private fun readFileToDatabase(uri: Uri) {
         val inputStream = contentResolver.openInputStream(uri)
         inputStream?.let {
+            var resultInfo = ""
             launch(Dispatchers.IO) {
                 val bytes = ByteArray(it.available())
                 it.read(bytes)
                 if (bytes.isEmpty()) {
-                    withContext(Dispatchers.Main) {
-                        ToastUtil.showShort(this@MainActivity, getString(R.string.file_empty))
-                    }
+                    resultInfo = getString(R.string.file_empty)
                     return@launch
                 }
                 val recommendInfo: List<RecommendInfo>
@@ -109,20 +108,18 @@ class MainActivity : AppCompatActivity(), CoroutineScope by MainScope(), View.On
                     }
                 } catch (e: JsonSyntaxException) {
                     e.printStackTrace()
-                    withContext(Dispatchers.Main) {
-                        ToastUtil.showShort(this@MainActivity, getString(R.string.file_error))
-                    }
+                    resultInfo = getString(R.string.file_error)
                     return@launch
                 } catch (e: OutOfMemoryError) {
                     e.printStackTrace()
-                    withContext(Dispatchers.Main) {
-                        ToastUtil.showShort(this@MainActivity, getString(R.string.file_oom))
-                    }
+                    resultInfo = getString(R.string.file_oom)
                     return@launch
                 }
                 ServiceDatabase.getRecommendAppDao().insertApp(recommendInfo)
-                withContext(Dispatchers.Main) {
-                    ToastUtil.showShort(this@MainActivity, getString(R.string.import_success))
+                resultInfo = getString(R.string.import_success)
+            }.invokeOnCompletion {
+                launch(Dispatchers.Main) {
+                    ToastUtil.showShort(this@MainActivity, resultInfo)
                 }
             }
         }
